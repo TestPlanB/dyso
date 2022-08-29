@@ -60,7 +60,7 @@ afterEvaluate {
 
 3.在so文件下载成功后，使用  ```DynamicSo.insertPathToNativeSystem(this,file); ``` file为自定义so的下载路径，如app例子项目所示
 
-4.可全局替换System.load/在需要用到native方法前调用  ```DynamicSo.loadStaticSo(file); ``` file为目标so文件，即代表so的单个文件
+4.可全局替换System.loadLibrary/在需要用到native方法前调用  ```DynamicSo.loadStaticSo(file); ``` file为目标so文件，即代表so的单个文件
 
 
 
