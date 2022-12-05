@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         String absolutePath = getFilesDir().getAbsolutePath();
         Log.i("hello", "ab " + absolutePath);
         File file = new File(absolutePath + "/dynamic_so/libnativecpptwo.so");
-        DynamicSo.loadStaticSo(file);
+        DynamicSo.loadStaticSo(file,absolutePath);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
