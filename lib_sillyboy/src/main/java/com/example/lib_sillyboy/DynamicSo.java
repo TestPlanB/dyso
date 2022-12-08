@@ -11,7 +11,7 @@ import java.util.List;
 
 
 public class DynamicSo {
-    public static void loadStaticSo(File soFIle, String absolutePath) {
+    public static void loadStaticSo(File soFIle, String path) {
         try {
             ElfParser parser = null;
             final List<String> dependencies;
@@ -28,10 +28,10 @@ public class DynamicSo {
             for (final String dependency : dependencies) {
 
                 try {
-                    File file = new File(absolutePath + "/dynamic_so/" + dependency);
+                    File file = new File(path + dependency);
                     if (file.exists()) {
                         //递归查找
-                        loadStaticSo(file, absolutePath);
+                        loadStaticSo(file, path);
                     } else {
                         // so文件不存在这个文件夹，代表是ndk中的so，如liblog.so，则直接加载
                         // 把本来lib前缀和.so后缀去掉即可

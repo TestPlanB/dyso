@@ -27,10 +27,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String absolutePath = getFilesDir().getAbsolutePath();
-        Log.i("hello", "ab " + absolutePath);
-        File file = new File(absolutePath + "/dynamic_so/libnativecpptwo.so");
-        DynamicSo.loadStaticSo(file,absolutePath);
+        String path = getFilesDir().getAbsolutePath() + "/dynamic_so/";
+        Log.i("hello", "path " + path);
+        File file = new File(path + "libnativecpptwo.so");
+        DynamicSo.loadStaticSo(file, path);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
