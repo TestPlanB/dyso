@@ -11,7 +11,7 @@ import java.util.List;
 
 
 public class DynamicSo {
-    public static void loadStaticSo(File soFIle) {
+    public static void loadStaticSo(File soFIle, String path) {
         try {
             ElfParser parser = null;
             final List<String> dependencies;
@@ -22,19 +22,30 @@ public class DynamicSo {
                 if (parser != null) {
                     parser.close();
                 }
-
             }
+            //如果nativecpp3->nativecpptwo->nativecpp 则先加载 DynamicSo.loadStaticSo(nativecpptwo)，此时nativecpp作为nativecpptwo的直接依赖被加载了
+            //不能直接加载nativecpp3，导致加载直接依赖nativetwo的时候nativecpp没加载导致错误。 这个可以优化，比如递归
             for (final String dependency : dependencies) {
-                // 把本来lib前缀和.so后缀去掉即可
-                String dependencySo = dependency.substring(3, dependency.length() - 3);
-                System.loadLibrary(dependencySo);
-                //loadLibrary(context, libraryLoader.unmapLibraryName(dependency));
-            }
 
+                try {
+                    File file = new File(path + dependency);
+                    if (file.exists()) {
+                        //递归查找
+                        loadStaticSo(file, path);
+                    } else {
+                        // so文件不存在这个文件夹，代表是ndk中的so，如liblog.so，则直接加载
+                        // 把本来lib前缀和.so后缀去掉即可
+                        String dependencySo = dependency.substring(3, dependency.length() - 3);
+                        //在application已经注入了路径DynamicSo.insertPathToNativeSystem(this,file) 所以采用系统的加载就行
+                        System.loadLibrary(dependencySo);
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
         } catch (IOException ignored) {
-            // This a redundant step of the process, if our library resolving fails, it will likely
-            // be picked up by the system's resolver, if not, an exception will be thrown by the
-            // next statement, so its better to try twice.
         }
         // 先把依赖项加载完，再加载本身
         System.loadLibrary(soFIle.getName().substring(3, soFIle.getName().length() - 3));
