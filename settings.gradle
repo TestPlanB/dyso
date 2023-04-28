@@ -1,5 +1,5 @@
 
-rootProject.name = "nativeCpp"
+rootProject.name = "sillyboy"
 include ':app'
 include ':lib_sillyboy'
 include ':lib_sillyplugin'
