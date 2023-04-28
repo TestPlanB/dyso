@@ -6,14 +6,64 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
     <TextView
-        android:id="@+id/sample_text"
+        android:text="pika:see log !!!!!"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+
+    <Button
+        android:id="@+id/native1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="click native 1!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/native2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="click native 2!"
+        app:layout_constraintTop_toBottomOf="@id/native1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+       />
+
+    <Button
+        android:id="@+id/native3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="click native 3!"
+        app:layout_constraintTop_toBottomOf="@id/native2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <Button
+        android:id="@+id/load_normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="system load "
+        app:layout_constraintTop_toBottomOf="@id/native3"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/load_dynamic" />
+
+    <Button
+        android:id="@+id/load_dynamic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="dynamic load"
+        app:layout_constraintTop_toBottomOf="@id/native3"
+        app:layout_constraintLeft_toRightOf="@+id/load_normal"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

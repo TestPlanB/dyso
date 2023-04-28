@@ -1,23 +1,23 @@
-plugins {
-    id 'com.android.application'
-}
 
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'com.plugins.core'
 android {
-    compileSdk 31
+    compileSdkVersion 31
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'migrateToAndroidx/migration.xml'
+        exclude 'META-INF/common.kotlin_module'
+    }
 
     defaultConfig {
-        applicationId "com.example.nativecpp"
-        minSdk 21
-        targetSdk 30
+        applicationId "com.example.sillyboy"
+        minSdkVersion 23
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        externalNativeBuild {
-            cmake {
-                cppFlags ''
-            }
-        }
     }
 
     buildTypes {
@@ -30,20 +30,17 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    externalNativeBuild {
-        cmake {
-            path file('src/main/cpp/CMakeLists.txt')
-            version '3.18.1'
-        }
+    kotlinOptions {
+        jvmTarget = '1.8'
     }
-    buildFeatures {
-        viewBinding true
+    viewBinding {
+        enabled = true
     }
-
 }
 
+
 ext {
-    deleteSoName = ["libnativecpptwo.so","libnativecpp.so"]
+    deleteSoName = ["libnative1.so","libnative2.so","libnative3.so"]
 }
 // 这个是初始化 -配置 -执行阶段中，配置阶段执行的任务之一，完成afterEvaluate就可以得到所有的tasks，从而可以在里面插入我们定制化的数据
 task(dynamicSo) {
@@ -59,11 +56,11 @@ task(dynamicSo) {
             if (it.isDirectory()) {
                 it.listFiles().each {
                     target ->
-                        print("file ${target.name}")
                         def compareName = target.name
                         deleteSoName.each {
                             if (compareName.contains(it)) {
                                 target.delete()
+                                print("delete file ${target.name}")
                             }
                         }
                 }
@@ -86,14 +83,14 @@ afterEvaluate {
 }
 
 
-dependencies {
 
+dependencies {
     implementation 'androidx.appcompat:appcompat:1.3.0'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation 'androidx.core:core-ktx:+'
+    implementation 'androidx.core:core-ktx:1.5.0'
     implementation project(path: ':lib_sillyboy')
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
 }
+
+

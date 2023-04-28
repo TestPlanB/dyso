@@ -1,0 +1,46 @@
+apply plugin: 'groovy'
+apply plugin: 'java'
+// gradle 7 以上的删除了maven plugin，改为了maven-publish 可以先改为gradle 6
+apply plugin: 'maven'
+
+
+dependencies {
+    implementation gradleApi()
+    implementation localGroovy()
+
+    implementation 'org.ow2.asm:asm:7.2'
+    implementation 'org.ow2.asm:asm-commons:7.2'
+    implementation 'com.android.tools.build:gradle:3.4.1'
+    implementation 'com.google.guava:guava:27.0.1-android'
+
+
+}
+
+
+repositories {
+    mavenCentral()
+}
+
+
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            //本地Maven
+            repository(url: uri('../repositories'))
+            pom.groupId = 'com.pika.plugin'
+            pom.artifactId = 'sillyboy'
+            pom.version = '1.0.2'
+        }
+    }
+}
+
+
+
+
+
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}

@@ -14,20 +14,21 @@ project("nativecpp")
 # You can define multiple libraries, and CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
 
-add_library( # Sets the name of the library.
-        nativecpp
-
-        # Sets the library as a shared library.
-        SHARED
-
-        # Provides a relative path to your source file(s).
-        native-lib.cpp)
 
 add_library(
-        nativecpptwo
+        native1
         SHARED
-        test.cpp
-
+        nativeso1.c
+)
+add_library(
+        native2
+        SHARED
+        nativeso2.c
+)
+add_library(
+        native3
+        SHARED
+        nativeso3.c
 )
 
 # Searches for a specified prebuilt library and stores the path as a
@@ -47,18 +48,27 @@ find_library( # Sets the name of the path variable.
 # can link multiple libraries, such as libraries you define in this
 # build script, prebuilt third-party libraries, or system libraries.
 
+# 构建多依赖场景
 target_link_libraries( # Specifies the target library.
-        nativecpp
+        native1
 
         # Links the target library to the log library
         # included in the NDK.
         ${log-lib})
 
-
 target_link_libraries( # Specifies the target library.
-        nativecpptwo
+        native2
 
         # Links the target library to the log library
         # included in the NDK.
-        nativecpp
-        ${log-lib})
+        ${log-lib}
+        native1)
+
+target_link_libraries( # Specifies the target library.
+        native3
+
+        # Links the target library to the log library
+        # included in the NDK.
+        ${log-lib}
+        native2)
+

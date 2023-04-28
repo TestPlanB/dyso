@@ -4,53 +4,48 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
 
-import com.example.lib_sillyboy.DynamicSo;
 import com.example.nativecpp.databinding.ActivityMainBinding;
-import com.example.lib_sillyboy.elf.ElfParser;
+import com.pika.sillyboy.DynamicLoad;
+import com.pika.sillyboy.DynamicSoLauncher;
 
 
 import java.io.File;
 
+// 把这个注解删掉，System.loadLibrary就会走正常的流程，否则就会走插桩流程
+//@DynamicLoad
 public class MainActivity extends AppCompatActivity {
 
-    // Used to load the 'nativecpptwo' library on application startup.
-    static {
-        //System.loadLibrary("nativecpptwo");
-
-    }
 
     private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         String path = getFilesDir().getAbsolutePath() + "/dynamic_so/";
-        Log.i("hello", "path " + path);
-        File file = new File(path + "libnativecpptwo.so");
-        DynamicSo.loadStaticSo(file, path);
+
+        Log.i("hello", "path:" + path);
+        File file = new File(path + "libnative3.so");
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        // 正常的流程System.loadLibrary
+        binding.loadNormal.setOnClickListener(v -> System.loadLibrary("native3"));
 
-        // Example of a call to a native method
-        TextView tv = binding.sampleText;
+        // 调用动态so库
+        binding.loadDynamic.setOnClickListener(v -> DynamicSoLauncher.INSTANCE.loadSoDynamically(file));
+        binding.native1.setOnClickListener(v -> clickNative1());
 
-        tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickTest();
+        binding.native2.setOnClickListener(v -> clickNative2());
 
-            }
-        });
+        binding.native3.setOnClickListener(v -> clickNative3());
+
     }
 
-    /**
-     * A native method that is implemented by the 'nativecpp' native library,
-     * which is packaged with this application.
-     */
 
-    public native void clickTest();
+    public native void clickNative1();
+    public native void clickNative2();
+    public native void clickNative3();
 }
 
