@@ -22,7 +22,7 @@ public class SystemLoadHelper {
             return;
         }
         classNode.methods.forEach(methodNode -> methodNode.instructions.forEach(abstractInsnNode -> {
-            // 如果是INVOKESPECIAL才继续进行
+            // 如果是InvokeStatic才继续进行
             if (abstractInsnNode.getOpcode() == Opcodes.INVOKESTATIC) {
                 transformInvokeStatic((MethodInsnNode) abstractInsnNode);
             }
