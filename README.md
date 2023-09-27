@@ -1,4 +1,5 @@
-# SillyBoy
+# dyso
+so dynamically loading （dy so）
 android 动态加载so库实现 你所不知道的“船新”版本
 ## 关于demo
 本项目是动态so加载的核心流程，所以并不直接演示so的下载过程，需要demo使用者将test_so_package的三个demo so库放到指定的演示位置（模拟so已经下载好了，可对接自己使用的下载方式），本例子是放在目录
