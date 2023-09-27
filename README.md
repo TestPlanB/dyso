@@ -109,8 +109,8 @@ ps：这里其实已经可以实现了无痕替代，只是考虑到大多数可
 
 ## 项目层级介绍
 * **app下是使用例子**
-* **lib_sillyboy 是SillyBoy的封装实现**
-* **lib_sillyplugin 是SillyBoy的插件，用于替换代码的System.loadLibrary,默认关闭了，可看代码注释打开**
+* **lib_sillyboy 是dyso的封装实现**
+* **lib_sillyplugin 是dyso的插件，用于替换代码的System.loadLibrary,默认关闭了，可看代码注释打开**
 
 ## 环境准备
 建议直接用最新的稳定版本Android Studio打开工程。目前项目已适配`Android Studio Arctic Fox | 2020.3.1`
